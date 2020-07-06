@@ -30,7 +30,7 @@ int main(int argc, char *argv[]) {
   int fd, error = False;
   size_t size = sizeof(struct input_event);
   FILE *ledfd;
-  bool blink = False; // cache feature from cmdline
+  bool ledblink = False; // cache feature from cmdline
 
   // Open keyboard device.
   if ((fd = open(INPUT_DEVICE, O_RDONLY)) == -1) {
@@ -61,8 +61,8 @@ int main(int argc, char *argv[]) {
     exit(1);
   }
   if (argc > 1) {
-    if (strcmp(argv[1], "-b") || strcmp(argv[1], "--blink")) {
-      blink = True;
+    if (strcmp(argv[1], "-b") || strcmp(argv[1], "--ledblink")) {
+      ledblink = True;
     }
   }
 
@@ -83,9 +83,9 @@ int main(int argc, char *argv[]) {
         fflush(ledfd);
       } else {
         capslock = True;
-        // turn off / blink the LED
-        if (blink) {
-          fprintf(ledfd, "0 blink");
+        // turn off / ledblink the LED
+        if (ledblink) {
+          fprintf(ledfd, "0 ledblink");
         } else
           fprintf(ledfd, "0 off");
         fflush(ledfd);
